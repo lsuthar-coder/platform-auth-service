@@ -42,7 +42,7 @@ JWT authentication service for the lsuthar.in platform. Issues RS256-signed acce
 
 | Variable | Description |
 |----------|-------------|
-| `DATABASE_URL` | Neon PostgreSQL connection string |
+| `DATABASE_URL` | PostgreSQL connection string |
 | `REDIS_URL` | Redis connection URL |
 | `PRIVATE_KEY_PEM` | RSA private key (PEM format) |
 | `PUBLIC_KEY_PEM` | RSA public key (PEM format) |
@@ -65,9 +65,32 @@ npm start
 docker buildx build --platform linux/amd64 -t ghcr.io/lsuthar-coder/auth-service:latest --push .
 ```
 
+## CI/CD
+
+- **CI** — GitHub Actions: lint, test, Docker build and push to GHCR on every push to `main`
+- **CD** — Jenkins: triggered by GitHub Actions after successful CI, deploys to K8s via `kubectl set image`
+
 ## Deployment
 
-Deployed on **Civo K8s** (MUM1 region) via **Azure Pipelines** CI/CD. RSA keys stored in Kubernetes secret `auth-service-secrets`.
+Deployed on **K3s** (Contabo VPS, `167.86.90.32`) in the `platform` namespace.
+
+Secrets stored in Kubernetes secret `auth-service-secrets`:
+- RSA private and public keys
+- PostgreSQL connection string
+- Redis URL
+
+K8s manifests live in `k8s/`:
+```
+k8s/
+├── deployment.yaml
+├── service.yaml
+└── ingress.yaml
+```
+
+Apply manually:
+```bash
+kubectl apply -f k8s/
+```
 
 ## Tech Stack
 

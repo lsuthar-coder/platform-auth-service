@@ -12,7 +12,7 @@ const pool = new Pool({
   max:                     10,
   idleTimeoutMillis:       30_000,
   connectionTimeoutMillis: 5_000,
-  ssl: { rejectUnauthorized: false }, // required for OCI ADB
+  ssl: false, // required for OCI ADB
 });
 
 pool.on('error', (err) => {

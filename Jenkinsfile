@@ -20,22 +20,23 @@ pipeline {
     }
 
     stage('Deploy to K8s') {
-      steps {
-        withCredentials([file(credentialsId: 'kubeconfig', variable: 'KUBECONFIG')]) {
-          sh """
-            kubectl set image deployment/auth-service \
-              api=${IMAGE} \
-              -n ${NAMESPACE} \
-              --kubeconfig=\$KUBECONFIG
+  steps {
+    withCredentials([file(credentialsId: 'kubeconfig', variable: 'KUBECONFIG')]) {
+      sh """
+        # Update image in deployment
+        kubectl set image deployment/auth-service \
+          api=ghcr.io/lsuthar-coder/auth-service:${GIT_COMMIT} \
+          -n ${NAMESPACE} \
+          --kubeconfig=\$KUBECONFIG
 
-            kubectl rollout status deployment/auth-service \
-              -n ${NAMESPACE} \
-              --kubeconfig=\$KUBECONFIG \
-              --timeout=120s
-          """
-        }
-      }
+        kubectl rollout status deployment/auth-service \
+          -n ${NAMESPACE} \
+          --kubeconfig=\$KUBECONFIG \
+          --timeout=120s
+      """
     }
+  }
+}
   }
 
   post {

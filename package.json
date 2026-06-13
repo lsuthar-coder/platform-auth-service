@@ -4,8 +4,8 @@
   "description": "JWT issuance with RS256, refresh token rotation, Redis blacklist",
   "main": "src/index.js",
   "scripts": {
-    "start": "node -r ./src/tracing.js src/index.js",
-    "dev": "nodemon -r ./src/tracing.js src/index.js",
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
     "test": "jest"
   },
   "dependencies": {

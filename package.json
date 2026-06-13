@@ -9,9 +9,6 @@
     "test": "jest"
   },
   "dependencies": {
-    "@opentelemetry/auto-instrumentations-node": "^0.76.0",
-    "@opentelemetry/exporter-trace-otlp-http": "^0.48.0",
-    "@opentelemetry/sdk-node": "^0.218.0",
     "cookie-parser": "^1.4.6",
     "dotenv": "^16.4.1",
     "express": "^4.18.2",

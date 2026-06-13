@@ -24,7 +24,7 @@ jobs:
         run: npm ci
 
       - name: Run tests
-        run: npm test --if-present
+        run: npm test -- --passWithNoTests
 
       - name: Login to GHCR
         uses: docker/login-action@v3
